@@ -4,12 +4,14 @@ import (
 	"bufio"
 	"os"
 	"strconv"
+	"strings"
+	"math"
 )
 
 const (
-	rootFolder = "./useless/"
+	rootFolder = "./break/"
 
-	start = 10000
+	start = 1000
 	nMultiplier = 2
 	nStep =10
 )
@@ -19,15 +21,17 @@ func main() {
 		panic(err)
 	}
 
-	for i := 0; i < nStep; i++ {
-		nn := start * nMultiplier * i
+	for i := 1; i <= nStep; i++ {
+		nn := start * int((math.Pow(nMultiplier, float64(i))))
 		pkgName := "drink"+strconv.Itoa(nn)+"cups"
+		pkgName = strings.Replace(pkgName, "000000cups", "Mcups", -1)
+		pkgName = strings.Replace(pkgName, "000cups", "Kcups", -1)
 
 		if err := os.MkdirAll(rootFolder + pkgName, 0777); err != nil {
 			panic(err)
 		}
 
-		//generateGenerics(rootFolder, pkgName, nn)
+		generateGenerics(rootFolder, pkgName, nn)
 	}
 }
 
